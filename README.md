@@ -1,6 +1,6 @@
 # Auto Tour Agent
 
-This repository contains basic utilities for collecting points of interest (POI) data using the [OpenTripMap](https://opentripmap.io/product) API. The script helps you gather travel information that can be used for building tourism datasets or exploration tools.
+This repository contains basic utilities for collecting points of interest (POI) data using the [OpenTripMap](https://opentripmap.io/product) API. A small sample dataset is included so you can try the chatbot without providing an OpenTripMap key. In addition, a Gemini powered chatbot demonstrates how to generate itineraries from the dataset.
 
 ## Requirements
 
@@ -12,8 +12,21 @@ pip install -r requirements.txt
 
 ## Collecting POI Data
 
-Use `scripts/collect_opentripmap.py` to fetch places around a location. You must supply your own OpenTripMap API key.
+Use `scripts/collect_opentripmap.py` to fetch places around a location. This step is optional because a small Seoul dataset (`data/seoul_sample.csv`) is already provided. If you do run the script, you must supply your own OpenTripMap API key.
 
+## Gemini Chatbot
+
+If you have a Gemini API key, you can generate a short itinerary using the
+language model. Set your API key in the ``GEMINI_API_KEY`` environment variable
+and run:
+
+```bash
+python scripts/gemini_chatbot.py --data data/seoul_sample.csv --days 2
+```
+
+The script sends the place names to Gemini and prints the resulting itinerary.
+
+If `GEMINI_API_KEY` is set, the web interface will use Gemini to suggest an itinerary.
 Example usage:
 
 
