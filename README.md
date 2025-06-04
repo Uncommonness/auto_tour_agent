@@ -16,6 +16,7 @@ Use `scripts/collect_opentripmap.py` to fetch places around a location. You must
 
 Example usage:
 
+
 ```bash
 python scripts/collect_opentripmap.py \
     --apikey YOUR_API_KEY \
