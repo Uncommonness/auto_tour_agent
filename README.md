@@ -1,5 +1,6 @@
 # Auto Tour Agent
 
+
 This repository contains basic utilities for collecting points of interest (POI) data using the [OpenTripMap](https://opentripmap.io/product) API. The script helps you gather travel information that can be used for building tourism datasets or exploration tools.
 
 ## Requirements
@@ -15,7 +16,6 @@ pip install -r requirements.txt
 Use `scripts/collect_opentripmap.py` to fetch places around a location. You must supply your own OpenTripMap API key.
 
 Example usage:
-
 
 ```bash
 python scripts/collect_opentripmap.py \

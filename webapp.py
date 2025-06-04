@@ -24,6 +24,7 @@ def chat():
     if 'user' not in session:
         return redirect(url_for('login'))
     itinerary = None
+
     if request.method == 'POST':
         days = int(request.form.get('days', 1))
         places = load_places(DATA_PATH)
@@ -31,6 +32,7 @@ def chat():
         # convert list-of-lists to dict for template
         itinerary = {i + 1: p for i, p in enumerate(plan)}
     return render_template('chat.html', itinerary=itinerary)
+
 
 
 @app.route('/logout')
