@@ -6,8 +6,6 @@ from typing import List, Dict
 
 API_BASE = "https://api.opentripmap.com/0.1"
 
-
-
 def fetch_places(api_key: str, lat: float, lon: float, radius: int, limit: int, lang: str = "en") -> List[Dict]:
     """Fetch basic place information within a radius."""
     url = f"{API_BASE}/{lang}/places/radius"
@@ -23,10 +21,11 @@ def fetch_places(api_key: str, lat: float, lon: float, radius: int, limit: int, 
     resp.raise_for_status()
     return resp.json()
 
+
+
 def collect_data(api_key: str, lat: float, lon: float, radius: int, limit: int, out_csv: str, lang: str = "en") -> None:
     """Collect places around a point and save them to a CSV file."""
     places = fetch_places(api_key, lat, lon, radius, limit, lang)
-
 
     fieldnames = ["xid", "name", "lat", "lon", "kinds"]
     with open(out_csv, "w", newline="", encoding="utf-8") as f:
