@@ -13,7 +13,7 @@ pip install -r requirements.txt
 
 ## Collecting POI Data
 
-Use `scripts/collect_opentripmap.py` to fetch places around a location. You must supply your own OpenTripMap API key.
+Use `scripts/collect_opentripmap.py` to fetch places around a location. Supplying an OpenTripMap API key is optional. Without a key the script will simply copy the bundled sample data.
 
 Example usage:
 
@@ -26,6 +26,8 @@ python scripts/collect_opentripmap.py \
     --limit 50 \
     --output data/seoul_poi.csv
 ```
+
+Omit the `--apikey` flag to simply copy the included sample data instead of contacting the API.
 
 This command downloads up to 50 places within a 1 km radius of the coordinates provided (here: Seoul, South Korea) and saves them to `data/seoul_poi.csv`.
 
