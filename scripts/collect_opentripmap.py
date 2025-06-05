@@ -1,10 +1,13 @@
 import argparse
 import csv
+import os
+import shutil
 import requests
-from typing import List, Dict
+from typing import List, Dict, Optional
 
 
 API_BASE = "https://api.opentripmap.com/0.1"
+SAMPLE_CSV = os.path.join(os.path.dirname(__file__), "..", "data", "example_places.csv")
 
 
 def fetch_places(api_key: str, lat: float, lon: float, radius: int, limit: int, lang: str = "en") -> List[Dict]:
@@ -25,8 +28,16 @@ def fetch_places(api_key: str, lat: float, lon: float, radius: int, limit: int, 
     return resp.json()
 
 
-def collect_data(api_key: str, lat: float, lon: float, radius: int, limit: int, out_csv: str, lang: str = "en") -> None:
-    """Collect places around a point and save them to a CSV file."""
+def collect_data(api_key: Optional[str], lat: float, lon: float, radius: int, limit: int, out_csv: str, lang: str = "en") -> None:
+    """Collect places around a point and save them to a CSV file.
+
+    If ``api_key`` is ``None`` the bundled sample data is copied to ``out_csv``.
+    """
+    if api_key is None:
+        shutil.copyfile(SAMPLE_CSV, out_csv)
+        print(f"No API key provided, copied sample data to {out_csv}")
+        return
+
     places = fetch_places(api_key, lat, lon, radius, limit, lang)
 
 
@@ -46,9 +57,9 @@ def collect_data(api_key: str, lat: float, lon: float, radius: int, limit: int, 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Collect POI data from OpenTripMap API")
-    parser.add_argument("--apikey", required=True, help="OpenTripMap API key")
-    parser.add_argument("--lat", type=float, required=True, help="Latitude of the center")
-    parser.add_argument("--lon", type=float, required=True, help="Longitude of the center")
+    parser.add_argument("--apikey", help="OpenTripMap API key")
+    parser.add_argument("--lat", type=float, default=0.0, help="Latitude of the center (ignored without API key)")
+    parser.add_argument("--lon", type=float, default=0.0, help="Longitude of the center (ignored without API key)")
     parser.add_argument("--radius", type=int, default=1000, help="Search radius in meters")
     parser.add_argument("--limit", type=int, default=50, help="Maximum number of places to fetch")
     parser.add_argument("--lang", default="en", help="Language code")
