@@ -29,6 +29,21 @@ python scripts/collect_opentripmap.py \
 
 This command downloads up to 50 places within a 1 km radius of the coordinates provided (here: Seoul, South Korea) and saves them to `data/seoul_poi.csv`.
 
+## TAG Chatbot
+
+`scripts/tag_chatbot.py` provides a simple tag based approach for querying
+stored places and generating answers with the Gemini API. First import a CSV
+file into the SQLite database and then run a query:
+
+```bash
+python scripts/tag_chatbot.py import --csv data/seoul_sample.csv --db places.db
+
+python scripts/tag_chatbot.py query \
+    --tag restaurants \
+    --question "Recommend a place for dinner" \
+    --apikey YOUR_GEMINI_API_KEY
+```
+
 ## License
 
 This project is licensed under the Apache 2.0 License. See the [LICENSE](LICENSE) file for details.
